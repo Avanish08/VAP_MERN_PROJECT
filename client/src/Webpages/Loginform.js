@@ -5,7 +5,7 @@ import Footer from './Component/Footer';
 const Loginform = () => {
   return (
     <>
-      <Navbar />
+   
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="max-w-md mx-auto flex flex-col">
           <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -43,10 +43,10 @@ const Loginform = () => {
               </button>
             </div>
             <p className="mt-4 text-center text-gray-600 text-sm">
-              Don't have an account? <a href="#" className="text-dark-purple hover:text-purple-700">Sign up here</a>
+              Don't have an account? <a href="/" className="text-dark-purple hover:text-purple-700">Sign up here</a>
             </p>
           </form>
-          <Footer />
+        
         </div>
       </div>
     </>
