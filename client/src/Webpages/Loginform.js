@@ -1,6 +1,6 @@
 import React from 'react';
-import Navbar from './Component/Navbar';
-import Footer from './Component/Footer';
+import { Link } from 'react-router-dom';
+
 
 const Loginform = () => {
   return (
@@ -37,13 +37,15 @@ const Loginform = () => {
             <div className="flex items-center justify-between">
               <button
                 type="submit"
-                className="bg-dark-purple hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 Login
               </button>
             </div>
             <p className="mt-4 text-center text-gray-600 text-sm">
-              Don't have an account? <a href="/" className="text-dark-purple hover:text-purple-700">Sign up here</a>
+              Don't have an account? <Link to="/" className="text-orange-500 text-1xl py-2 px-4 rounded hover:underline h-12">
+            Singup
+          </Link>
             </p>
           </form>
         

@@ -1,31 +1,62 @@
-import React, { useState ,useEffect} from 'react';
-import Navbar from './Component/Navbar';
-import Footer from './Component/Footer';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import { ToastContainer } from 'react-toastify';
+import { handleError } from './utils';
 
 const Rejs = () => {
-  const [username, setUsername] = useState('');
-  const [aadhaarCard, setAadhaarCard] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [regiInfo, setRegiInfo] = useState({
+    Username: '',
+    AddharNo: '',
+    Email: '',
+    Password: '',
+    ConfirmPassword: ''
+  });
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log('Registration submitted:', {
-      username,
-      aadhaarCard,
-      email,
-      password,
-      confirmPassword,
-    });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setRegiInfo((prevRegiInfo) => ({ ...prevRegiInfo, [name]: value }));
+  };
+
+  console.log('RegiInfo ->', regiInfo);
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    const { Username, AddharNo, Email, Password, ConfirmPassword } = regiInfo;
+    if (!Username || !Email || !AddharNo || !Password || !ConfirmPassword) {
+      return handleError('There some Mismatched');
+    }
+    try {
+      const url = "http://localhost:8080/auth/Regis";
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(regiInfo)
+        
+      });
+     
+      if (response.status === 400) {
+        const error = await response.json();
+        handleError(error.message);
+      } else if (response.ok) {
+        const result = await response.json();
+        console.log(result);
+      } else {
+        handleError('Unknown error occurred');
+      }
+    } catch (err) {
+      handleError(err);
+    }
   };
 
   return (
     <>
-      
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="max-w-md lg:w-4/5 xl:w-4/5 2xl:w-4/5 mx-auto flex flex-col">
-          <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
+          <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSignup}>
             <h2 className="text-2xl font-bold mb-6 text-center text-dark-purple">Register</h2>
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
@@ -34,25 +65,27 @@ const Rejs = () => {
               <input
                 id="username"
                 type="text"
-                value={username}
-                onChange={(event) => setUsername(event.target.value)}
+                name="Username"
+                value={regiInfo.Username}
+                onChange={handleChange}
                 placeholder="Enter your username"
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-faint-navy"
-                required
+               
               />
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="addhaar-card">
-                Aadhar Card
+              AddharNo
               </label>
               <input
                 id="addhaar-card"
                 type="text"
-                value={aadhaarCard}
-                onChange={(event) => setAadhaarCard(event.target.value)}
+                name="AddharNo"
+                onChange={handleChange}
+                value={regiInfo.AddharNo}
                 placeholder="Enter your VID"
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-faint-navy"
-                required
+               
               />
             </div>
             <div className="mb-4">
@@ -62,11 +95,12 @@ const Rejs = () => {
               <input
                 id="email"
                 type="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                name="Email"
+                onChange={handleChange}
+                value={regiInfo.Email}
                 placeholder="you@example.com"
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-faint-navy"
-                required
+               
               />
             </div>
             <div className="mb-4">
@@ -76,11 +110,12 @@ const Rejs = () => {
               <input
                 id="password"
                 type="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
+                name="Password"
+                onChange={handleChange}
+                value={regiInfo.Password}
                 placeholder="Enter your password"
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-faint-navy"
-                required
+               
               />
             </div>
             <div className="mb-6">
@@ -90,25 +125,29 @@ const Rejs = () => {
               <input
                 id="confirm-password"
                 type="password"
-                value={confirmPassword}
-                onChange={(event) => setConfirmPassword(event.target.value)}
+                name="ConfirmPassword"
+                onChange={handleChange}
+                value={regiInfo.ConfirmPassword}
                 placeholder="Confirm your password"
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-faint-navy"
-                required
+               
               />
             </div>
             <div className="flex items-center justify-between">
               <button
                 type="submit"
-                className="bg-dark-purple hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 Register
               </button>
             </div>
             <p className="mt-4 text-center text-gray-600 text-sm">
-              Already have an account? <a href="/login" className="text-blue-500 hover:text-blue-700">Login here</a>
+              Already have an account? <Link to="/login" className="text-orange-500 text-1xl py-2 px-4 rounded hover:underline h-12">
+            Login
+          </Link>
             </p>
           </form>
+          <ToastContainer/>
         </div>
       </div>
      
