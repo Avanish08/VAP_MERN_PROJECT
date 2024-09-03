@@ -16,7 +16,8 @@ const Services = () => {
         </div>
         <div className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded h-50 w-full md:w-1/2">
           <img src="/flight.png" alt="Flight" className="w-12 h-12 mx-auto mb-2" />
-          <p className="text-2xl">FLIGHT TICKET BOOKING</p>
+          <p className="text-2xl">FLIGHT TICKET BOOKING </p>
+          <p className="text-1xl">COMMING SOON </p>
         </div>
       </div>
     </div>

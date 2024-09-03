@@ -27,7 +27,7 @@ const Sidebar = () => {
           </Link>
         </li>
         <li className="mt-10">
-          <Link to="/logout" className="text-white font-bold text-2xl py-2 px-4 rounded hover:underline h-12">
+          <Link to="/login" className="text-white font-bold text-2xl py-2 px-4 rounded hover:underline h-12">
             LogOUT
           </Link>
         </li>

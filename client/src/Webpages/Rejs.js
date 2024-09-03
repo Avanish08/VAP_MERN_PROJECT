@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
-import { handleError } from './utils';
+import { handleError ,handleSuccess} from './utils';
 
 const Rejs = () => {
   const [regiInfo, setRegiInfo] = useState({
     Username: '',
-    AddharNo: '',
+    AddharCard: '',
     Email: '',
     Password: '',
     ConfirmPassword: ''
   });
+const navigate =useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,31 +24,30 @@ const Rejs = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    const { Username, AddharNo, Email, Password, ConfirmPassword } = regiInfo;
-    if (!Username || !Email || !AddharNo || !Password || !ConfirmPassword) {
+    const { Username, AddharCard, Email, Password, ConfirmPassword } = regiInfo;
+    if (!Username || !Email || !AddharCard || !Password || !ConfirmPassword) {
       return handleError('There some Mismatched');
     }
     try {
-      const url = "http://localhost:8080/auth/Regis";
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(regiInfo)
-        
-      });
-     
+      const response = await axios.post('http://localhost:8080/auth/Regis', regiInfo);
       if (response.status === 400) {
-        const error = await response.json();
+        const error = response.data;
+        console.log('Error response:', error);
         handleError(error.message);
-      } else if (response.ok) {
-        const result = await response.json();
+      } else if (response.status === 200) {
+        const result = response.data;
         console.log(result);
+      }
+      else if (response.status === 201) {
+        handleSuccess('User Created Sucessful');
+        setTimeout(()=>{
+            navigate('/login')
+        },1000)
       } else {
         handleError('Unknown error occurred');
       }
     } catch (err) {
+      console.log('Error caught:', err);
       handleError(err);
     }
   };
@@ -75,14 +75,14 @@ const Rejs = () => {
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="addhaar-card">
-              AddharNo
+              AddharCard
               </label>
               <input
                 id="addhaar-card"
                 type="text"
-                name="AddharNo"
+                name="AddharCard"
                 onChange={handleChange}
-                value={regiInfo.AddharNo}
+                value={regiInfo.AddharCard}
                 placeholder="Enter your VID"
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-faint-navy"
                

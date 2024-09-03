@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
-import { handleError } from './utils';
+import { handleError, handleSuccess } from './utils';
 
 const Loginform = () => {
   const [loginInfo, setLoginInfo] = useState({
     Username: '',
     Password: ''
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,24 +23,25 @@ const Loginform = () => {
       return handleError('There some Mismatched');
     }
     try {
-      const url = "http://localhost:8080/auth/Login";
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(loginInfo)
-      });
+      const response = await axios.post('http://localhost:8080/auth/Login', loginInfo);
       if (response.status === 400) {
-        const error = await response.json();
+        const error = response.data;
+        console.log('Error response:', error);
         handleError(error.message);
-      } else if (response.ok) {
-        const result = await response.json();
+      } else if (response.status === 200) {
+        const result = response.data;
         console.log(result);
+        handleSuccess('Login Successful');
+        localStorage.setItem('Username', Username);
+        
+        setTimeout(() => {
+          navigate('/main/Home');
+        }, 100);
       } else {
         handleError('Unknown error occurred');
       }
     } catch (err) {
+      console.log('Error caught:', err);
       handleError(err);
     }
   };
@@ -87,8 +90,8 @@ const Loginform = () => {
             </div>
             <p className="mt-4 text-center text-gray-600 text-sm">
               Don't have an account? <Link to="/" className="text-orange-500 text-1xl py-2 px-4 rounded hover:underline h-12">
-            Signup
-          </Link>
+                Signup
+              </Link>
             </p>
           </form>
           <ToastContainer />
