@@ -1,34 +1,37 @@
+// Sidebar.js
 import logo from './newlogo2.png';
 import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
   return (
-    <div className="bg-dark-purple p-4 min-h-screen rounded-md mb-4 md:mb-0 w-80 md:w-40rem xl:w-44rem lg:w-42rem sm:w-8rem">
-      <img src={logo} alt="logo" className="w-full h-auto mx-auto" />
-      <ul className="flex flex-col justify-center ">
-        <li className="mb-10">
-          <Link to="/main/Home" className="text-white font-bold text-2xl py-2 px-4 rounded hover:underline h-12">
+    <div className="bg-dark-purple p-4 min-h-screen rounded-md mb-4 md:mb-0 w-full md:w-48.5% xl:w-48.5% lg:w-48.5% sm:w-full">
+      <div className="logo-container mb-10 flex justify-center">
+        <img src={logo} alt="logo" className="w-1/2 h-auto md:w-3/4 xl:w-1/2 lg:w-3/4 sm:w-1/2" />
+      </div>
+      <ul className="nav-links flex flex-col justify-center">
+        <li className="nav-item mb-10">
+          <Link to="/main/Home" className="nav-link text-white font-bold text-lg md:text-2xl py-2 px-4 rounded hover:underline h-12">
             Home
           </Link>
         </li>
-        <li className="mb-10">
-          <Link to="/main/About" className="text-white font-bold text-2xl py-2 px-4 rounded hover:underline h-12">
+        <li className="nav-item mb-10">
+          <Link to="/main/About" className="nav-link text-white font-bold text-lg md:text-2xl py-2 px-4 rounded hover:underline h-12">
             About
           </Link>
         </li>
-        <li className="mb-10">
-          <Link to="/main/Services" className="text-white font-bold text-2xl py-2 px-4 rounded hover:underline h-12">
+        <li className="nav-item mb-10">
+          <Link to="/main/Services" className="nav-link text-white font-bold text-lg md:text-2xl py-2 px-4 rounded hover:underline h-12">
             Services
           </Link>
         </li>
-        <li className="mb-10">
-          <Link to="/main/ContactUs" className="text-white font-bold text-2xl py-2 px-4 rounded hover:underline h-12">
+        <li className="nav-item mb-10">
+          <Link to="/main/ContactUs" className="nav-link text-white font-bold text-lg md:text-2xl py-2 px-4 rounded hover:underline h-12">
             Contact Us
           </Link>
         </li>
-        <li className="mt-10">
-          <Link to="/login" className="text-white font-bold text-2xl py-2 px-4 rounded hover:underline h-12">
-            LogOUT
+        <li className="nav-item mt-10">
+          <Link to="/login" className="nav-link text-white font-bold text-lg md:text-2xl py-2 px-4 rounded hover:underline h-12">
+            Log Out
           </Link>
         </li>
       </ul>

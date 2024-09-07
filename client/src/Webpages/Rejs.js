@@ -136,13 +136,13 @@ const navigate =useNavigate();
             <div className="flex items-center justify-between">
               <button
                 type="submit"
-                className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-faint-navy hover:bg-dark-purple text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 Register
               </button>
             </div>
             <p className="mt-4 text-center text-gray-600 text-sm">
-              Already have an account? <Link to="/login" className="text-orange-500 text-1xl py-2 px-4 rounded hover:underline h-12">
+              Already have an account? <Link to="/login" className="text-orange-500 text-base py-2 px-4 rounded hover:underline h-12">
             Login
           </Link>
             </p>

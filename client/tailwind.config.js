@@ -3,10 +3,10 @@ module.exports = {
   content: ["./src/**/*.{html,js}"],
   theme: {
     extend: {colors: {
-      'dark-purple': '#0D0630', // Example dark purple
-      'faint-navy': '#001F3F', // Example faint navy blue
-      'primary-color':'#C7EDE4',
-      'button-color':'#9DACFF'
+      'dark-purple': '#0D7C66', // Example dark purple
+      'faint-navy': '#41B3A2', // Example faint navy blue
+      'primary-color':'#f8f4f9',
+      'button-color':'#41B3A2'
     },
     fontFamily: {
       roboto: ['Roboto'],

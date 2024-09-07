@@ -1,227 +1,242 @@
 import React, { useState } from "react";
 
 const Busticket = () => {
-    const [pnr, setPnr] = useState("");
-    const [busNumber, setBusNumber] = useState("");
-    const [busStatus, setBusStatus] = useState(null);
-    const [from, setFrom] = useState("");
-    const [to, setTo] = useState("");
-    const [date, setDate] = useState("");
-    const [passengerCount, setPassengerCount] = useState("");
-  
-    const handlePnrChange = (event) => {
-      setPnr(event.target.value);
-    };
-  
-    const handleBusNumberChange = (event) => {
-      setBusNumber(event.target.value);
-    };
-  
-    const handleFindBus = async () => {
-      try {
-        // Fetch bus status from backend
-        const response = await fetch(`/api/buses/${busNumber}`);
-        const data = await response.json();
-        setBusStatus(data);
-      } catch (error) {
-        console.error("Error fetching bus status:", error);
-        setBusStatus({ error: "Failed to fetch bus status" });
-      }
-    };
-  
-    const handleSubmit = async (event) => {
-      event.preventDefault();
-      // Fetch ticket status from backend using PNR
-      try {
-        const response = await fetch(`/api/tickets/${pnr}`);
-        const data = await response.json();
-        console.log(data);
-        // Update UI based on ticket status
-      } catch (error) {
-        console.error("Error fetching ticket status:", error);
-        // Handle error
-      }
-    };
-  
-    const handleBookTicketSubmit = async (event) => {
-      event.preventDefault();
-  
-      // Fetch data from backend API
-      try {
-        const response = await fetch("/api/tickets", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ from, to, date, passengerCount }),
-        });
-  
-        if (response.ok) {
-          // Handle successful response
-          console.log("Ticket booked successfully!");
-        } else {
-          // Handle error response
-          console.error("Error booking ticket!");
-        }
-      } catch (error) {
-        // Handle network error
-        console.error("Network error!", error);
-      }
-    };
-  
-    return (
-      <div className="container mx-auto p-4">
-        <h1 className="text-3xl font-bold mb-4 text-center">
-          Book Bus Ticket System
-        </h1>
-        <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Book ticket
-          </button>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Cancel ticket
-          </button>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Check ticket status
-          </button>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Track Bus
+  const [ticketStatus, setTicketStatus] = useState('');
+  const [statusMessage, setStatusMessage] = useState('');
+  const [from, setFrom] = useState('');
+  const [destination, setDestination] = useState('');
+  const [date, setDate] = useState('');
+  const [passengerCount, setPassengerCount] = useState(1);
+  const [bus, setBus] = useState(null);
+  const [stations, setStations] = useState([]);
+  const [route, setRoute] = useState([]);
+
+  const handleCheckStatus = async () => {
+    try {
+      const response = await fetch(`/api/check-bus-ticket/${ticketStatus}`);
+      const data = await response.json();
+      setStatusMessage(data.isConfirmed ? 'Ticket is confirmed!' : 'Ticket is not confirmed.');
+    } catch (error) {
+      console.error('Error checking ticket status:', error);
+      setStatusMessage('An error occurred. Please try again.');
+    }
+  };
+
+  const handleFromChange = (event) => {
+    setFrom(event.target.value);
+  };
+
+  const handleDestinationChange = (event) => {
+    setDestination(event.target.value);
+  };
+
+  const handleDateChange = (event) => {
+    setDate(event.target.value);
+  };
+
+  const handlePassengerCountChange = (event) => {
+    setPassengerCount(parseInt(event.target.value, 10));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Prevent form from submitting and refreshing the page
+    console.log('From:', from);
+    console.log('Destination:', destination);
+    console.log('Date:', date);
+    console.log('Passenger Count:', passengerCount);
+  };
+
+  const handleFindBus = () => {
+    fetch('/api/buses')
+      .then(response => response.json())
+      .then(data => {
+        setBus(data.bus);
+        setStations(data.stations);
+        setRoute(data.route);
+      });
+  };
+
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <div className="w-full h-screen p-4 overflow-auto scrollbar-hidden">
+      {/* Section 1 */}
+      <div className="bg-gray-200 p-4 rounded-md mx-auto mt-4 w-full max-w-4xl">
+        <h1 className="text-center text-2xl font-bold text-green-500">Bus Ticket Booking</h1>
+        <div className="bg-gray-100 p-4 rounded-md mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {[
+            { id: 'book-ticket', title: 'Book Ticket' },
+            { id: 'cancel-ticket', title: 'Cancel Ticket' },
+            { id: 'find-bus', title: 'Find Bus' },
+            { id: 'check-status', title: 'Check Ticket Status' },
+          ].map((item) => (
+            <button
+              key={item.id}
+              onClick={() => scrollToSection(item.id)}
+              className="flex flex-col items-center bg-gray-200 p-4 rounded-md hover:bg-gray-300 transition duration-200"
+            >
+              <div className="w-24 h-24 bg-green-400 rounded-md mb-2"></div>
+              <p className="text-gray-700 font-medium">{item.title}</p>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Section 2 */}
+      <div className="bg-gray-200 p-4 rounded-md mx-auto mt-4 w-full max-w-4xl" id="check-status">
+        <h2 className="text-lg font-bold mb-2">Check Ticket Status</h2>
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-4 space-y-4 sm:space-y-0">
+          <input
+            type="text"
+            className="w-full sm:w-3/4 rounded-md px-3 py-2 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter ticket ID"
+            value={ticketStatus}
+            onChange={(e) => setTicketStatus(e.target.value)}
+          />
+          <button
+            className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md"
+            onClick={handleCheckStatus}
+          >
+            Check
           </button>
         </div>
-        <h2 className="text-2xl font-bold mt-8 mb-4">
-          Check Ticket status
-        </h2>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        {statusMessage && (
+          <div className="bg-gray-100 rounded-md p-4">
+            <p className="text-gray-700 font-medium">{statusMessage}</p>
+          </div>
+        )}
+      </div>
+
+      {/* Section 3 */}
+      <div className="bg-gray-200 p-4 rounded-md mx-auto mt-10 w-full max-w-4xl" id="book-ticket">
+        <h1 className="text-3xl font-bold text-center mb-8">Book Ticket</h1>
+        <form onSubmit={handleSubmit} className="w-full max-w-sm mx-auto">
           <div className="mb-4">
-            <label htmlFor="pnr" className="block text-gray-700 font-bold mb-2">
-              Enter PNR number:
+            <label htmlFor="from" className="block text-gray-700 font-bold mb-2">
+              From
+            </label>
+            <select
+              id="from"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              value={from}
+              onChange={handleFromChange}
+            >
+              <option value="">Select a city</option>
+              <option value="Mumbai">Mumbai</option>
+              <option value="Pune">Pune</option>
+              <option value="NewDelhi">NewDelhi</option>
+            </select>
+          </div>
+          <div className="mb-4">
+            <label htmlFor="destination" className="block text-gray-700 font-bold mb-2">
+              Destination
+            </label>
+            <select
+              id="destination"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              value={destination}
+              onChange={handleDestinationChange}
+            >
+              <option value="">Select a city</option>
+              <option value="Mumbai">Mumbai</option>
+              <option value="Pune">Pune</option>
+              <option value="NewDelhi">NewDelhi</option>
+            </select>
+          </div>
+          <div className="mb-4">
+            <label htmlFor="date" className="block text-gray-700 font-bold mb-2">
+              Date
             </label>
             <input
-              type="text"
-              id="pnr"
+              type="date"
+              id="date"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              value={pnr}
-              onChange={handlePnrChange}
+              value={date}
+              onChange={handleDateChange}
             />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="passengerCount" className="block text-gray-700 font-bold mb-2">
+              No of Passenger
+            </label>
+            <select
+              id="passengerCount"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              value={passengerCount}
+              onChange={handlePassengerCountChange}
+            >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
           </div>
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus-shadow-outline"
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
-            Submit
+            Find Bus
           </button>
         </form>
-        <div className="bg-blue-500 p-4 rounded-lg">
-          <h2 className="text-white text-2xl font-bold mb-4">Book Ticket</h2>
-          <form onSubmit={handleBookTicketSubmit} className="flex flex-col gap-4">
-            <div className="flex gap-4">
-              <div>
-                <label htmlFor="from" className="text-white">
-                  From:
-                </label>
-                <select
-                  id="from"
-                  value={from}
-                  onChange={(e) => setFrom(e.target.value)}
-                  className="bg-blue-700 text-white rounded-lg px-3 py-2 focus:outline-none"
-                >
-                  <option value="">Select City</option>
-                  {/* Fetch city options from backend */}
-                </select>
-              </div>
-              <div>
-                <label htmlFor="to" className="text-white">
-                  To:
-                </label>
-                <select
-                  id="to"
-                  value={to}
-                  onChange={(e) => setTo(e.target.value)}
-                  className="bg-blue-700 text-white rounded-lg px-3 py-2 focus:outline-none"
-                >
-                  <option value="">Select City</option>
-                  {/* Fetch city options from backend */}
-                </select>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <div>
-                <label htmlFor="date" className="text-white">
-                  Date:
-                </label>
-                <input
-                  type="date"
-                  id="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  className="bg-blue-700 text-white rounded-lg px-3 py-2 focus:outline-none"
-                />
-              </div>
-              <div>
-                <label htmlFor="passengerCount" className="text-white">
-                  No of Passenger:
-                </label>
-                <input
-                  type="number"
-                  id="passengerCount"
-                  value={passengerCount}
-                  onChange={(e) => setPassengerCount(e.target.value)}
-                  className="bg-blue-700 text-white rounded-lg px-3 py-2 focus:outline-none"
-                />
-              </div>
-            </div>
-            <button
-              type="submit"
-              className="bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-yellow-600 focus:outline-none"
-            >
-              Find Ticket
-            </button>
-          </form>
-        </div>
-        <div className="container mx-auto p-4">
-          <div className="bg-gray-100 rounded-lg shadow-md p-6">
-            <h2 className="text-2xl font-bold mb-4">Track Bus</h2>
-            <div className="mb-4">
-              <label htmlFor="busNumber" className="block text-gray-700 font-bold mb-2">
-                Enter bus number:
-              </label>
-              <input
-                type="text"
-                id="busNumber"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                value={busNumber}
-                onChange={handleBusNumberChange}
-              />
-            </div>
-            <button
-              className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              onClick={handleFindBus}
-            >
-              Find Bus
-            </button>
-          </div>
-  
-          {busStatus && (
-            <div className="mt-6 bg-blue-500 text-white rounded-lg p-4">
-              <h3 className="text-xl font-bold mb-2">Bus Status</h3>
-              {busStatus.error ? (
-                <p className="text-red-500">{busStatus.error}</p>
-              ) : (
-                <div>
-                  <p>
-                    <strong>Bus Number:</strong> {busStatus.busNumber}
-                  </p>
-                  <p>
-                    <strong>Status:</strong> {busStatus.status}
-                  </p>
-                  {/* Add other relevant bus status details here */}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
       </div>
-    );
-  }
+
+      {/* Section 4 */}
+      <div className="bg-gray-100 py-8 px-4 mx-auto mt-10 w-full max-w-4xl" id="find-bus">
+        <div className="max-w-md mx-auto bg-white rounded-md shadow-md p-6">
+          <h2 className="text-xl font-semibold mb-4">Find Bus</h2>
+          <input
+            type="text"
+            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+            placeholder="Enter bus number or station"
+          />
+          <button
+            className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            onClick={handleFindBus}
+          >
+            Find Bus
+          </button>
+        </div>
+
+        {bus && (
+          <div className="mt-8">
+            <h2 className="text-xl font-semibold mb-4">Bus Status</h2>
+            <div className="flex flex-col md:flex-row items-start">
+              <div className="relative w-full md:w-1/4 h-40">
+                <div
+                  className="absolute top-0 left-0 w-2 bg-green-500 rounded-md"
+                  style={{
+                    height: `${((route.indexOf(bus) + 1) / route.length) * 100}%`,
+                  }}
+                />
+                {stations.map((station, index) => (
+                  <div
+                    key={index}
+                    className="absolute bottom-0 left-0 w-2 h-4 bg-red-500 rounded-md"
+                    style={{
+                      bottom: `${(index / stations.length) * 100}%`,
+                    }}
+                  />
+                ))}
+              </div>
+              <div className="ml-4">
+                <p className="text-gray-700 font-semibold">Bus: {bus}</p>
+                {stations.map((station, index) => (
+                  <p key={index} className="text-gray-600">
+                    {station}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default Busticket
