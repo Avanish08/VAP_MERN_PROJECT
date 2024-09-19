@@ -1,4 +1,3 @@
-// Sidebar.js
 import logo from './newlogo2.png';
 import { Link } from 'react-router-dom';
 
@@ -10,27 +9,27 @@ const Sidebar = () => {
       </div>
       <ul className="nav-links flex flex-col justify-center">
         <li className="nav-item mb-10">
-          <Link to="/main/Home" className="nav-link text-white font-bold text-lg md:text-2xl py-2 px-4 rounded hover:underline h-12">
+          <Link to="/main/Home" className="nav-link w-full h-full block border border-gray-200 hover:border-white hover:shadow-md transition duration-300 ease-in-out text-white font-bold text-lg md:text-2xl py-2 px-4 rounded h-12">
             Home
           </Link>
         </li>
         <li className="nav-item mb-10">
-          <Link to="/main/About" className="nav-link text-white font-bold text-lg md:text-2xl py-2 px-4 rounded hover:underline h-12">
+          <Link to="/main/About" className="nav-link w-full h-full block border border-gray-200 hover:border-white hover:shadow-md transition duration-300 ease-in-out text-white font-bold text-lg md:text-2xl py-2 px-4 rounded h-12">
             About
           </Link>
         </li>
         <li className="nav-item mb-10">
-          <Link to="/main/Services" className="nav-link text-white font-bold text-lg md:text-2xl py-2 px-4 rounded hover:underline h-12">
+          <Link to="/main/Services" className="nav-link w-full h-full block border border-gray-200 hover:border-white hover:shadow-md transition duration-300 ease-in-out text-white font-bold text-lg md:text-2xl py-2 px-4 rounded h-12">
             Services
           </Link>
         </li>
         <li className="nav-item mb-10">
-          <Link to="/main/ContactUs" className="nav-link text-white font-bold text-lg md:text-2xl py-2 px-4 rounded hover:underline h-12">
+          <Link to="/main/ContactUs" className="nav-link w-full h-full block border border-gray-200 hover:border-white hover:shadow-md transition duration-300 ease-in-out text-white font-bold text-lg md:text-2xl py-2 px-4 rounded h-12">
             Contact Us
           </Link>
         </li>
         <li className="nav-item mt-10">
-          <Link to="/login" className="nav-link text-white font-bold text-lg md:text-2xl py-2 px-4 rounded hover:underline h-12">
+          <Link to="/login" className="nav-link w-full h-full block border border-gray-200 hover:border-white hover:shadow-md transition duration-300 ease-in-out text-white font-bold text-lg md:text-2xl py-2 px-4 rounded h-12">
             Log Out
           </Link>
         </li>

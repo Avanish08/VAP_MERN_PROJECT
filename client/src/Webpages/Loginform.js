@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
 import { handleError, handleSuccess } from './utils';
 
@@ -23,21 +22,35 @@ const Loginform = () => {
       return handleError('There some Mismatched');
     }
     try {
-      const response = await axios.post('http://localhost:8080/auth/Login', loginInfo);
+      // Replace with your login API logic
+      const response = await fetch('http://localhost:8080/auth/Login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(loginInfo)
+      });
+      const result = await response.json();
       if (response.status === 400) {
-        const error = response.data;
-        console.log('Error response:', error);
-        handleError(error.message);
+        console.log('Error response:', result);
+        handleError(result.message);
       } else if (response.status === 200) {
-        const result = response.data;
         console.log(result);
         handleSuccess('Login Successful');
         localStorage.setItem('Username', Username);
         
         setTimeout(() => {
           navigate('/main/Home');
-        }, 100);
-      } else {
+        }, 1000);
+      }
+      else if (response.status === 204) {
+        console.log(result);
+        handleSuccess('Login Successful');
+        localStorage.setItem('Username', Username);
+        
+        setTimeout(() => {
+          navigate('/main/Home');
+        }, 1000);
+      }  
+      else {
         handleError('Unknown error occurred');
       }
     } catch (err) {

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
-import { handleError ,handleSuccess} from './utils';
+import { handleError, handleSuccess } from './utils';
 
 const Rejs = () => {
   const [regiInfo, setRegiInfo] = useState({
@@ -12,7 +11,7 @@ const Rejs = () => {
     Password: '',
     ConfirmPassword: ''
   });
-const navigate =useNavigate();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,20 +28,22 @@ const navigate =useNavigate();
       return handleError('There some Mismatched');
     }
     try {
-      const response = await axios.post('http://localhost:8080/auth/Regis', regiInfo);
+      const response = await fetch('http://localhost:8080/auth/Regis', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(regiInfo)
+      });
+      const result = await response.json();
       if (response.status === 400) {
-        const error = response.data;
-        console.log('Error response:', error);
-        handleError(error.message);
+        console.log('Error response:', result);
+        handleError(result.message);
       } else if (response.status === 200) {
-        const result = response.data;
         console.log(result);
-      }
-      else if (response.status === 201) {
+      } else if (response.status === 201) {
         handleSuccess('User Created Sucessful');
-        setTimeout(()=>{
-            navigate('/login')
-        },1000)
+        setTimeout(() => {
+          navigate('/login')
+        }, 1000)
       } else {
         handleError('Unknown error occurred');
       }
@@ -51,7 +52,6 @@ const navigate =useNavigate();
       handleError(err);
     }
   };
-
   return (
     <>
       <div className="flex items-center justify-center min-h-screen bg-gray-100">

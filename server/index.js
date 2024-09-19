@@ -7,6 +7,7 @@ const AuthRoute = require('./Routers/Authroute')
 const NewsRoutes = require('./Routers/NewsRoutes'); 
 const trainScheduleRoutes = require('./Routers/TrainRoutes');
 const busScheduleRoutes = require('./Routers/BusRoutes');
+const ticketRoutes = require('./Routers/TicketRoutes');
 
 require('./Models/mongodb')
 require('dotenv').config();
@@ -22,7 +23,7 @@ app.use('/auth',AuthRoute);
 app.use('/auth',NewsRoutes);
 app.use('/auth', trainScheduleRoutes);
 app.use('/auth', busScheduleRoutes);
-
+app.use('/auth', ticketRoutes);
 
 
 app.listen(PORT,()=>

@@ -24,6 +24,9 @@ function App() {
           <Route path="ContactUs" element={<Maincontent />} />
           <Route path="Trainticket" element={<Maincontent />} />
           <Route path="Busticket" element={<Maincontent />} />
+          <Route path="TrainTicket" element={<Maincontent />} />
+          <Route path="Passengerdetail" element={<Maincontent />} />
+          <Route path="bus-ticket" element={<Maincontent />} />
         </Route>
       </Routes>
       

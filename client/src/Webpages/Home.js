@@ -42,7 +42,7 @@ const Home = () => {
   return (
     <div className="w-full bg-primary-color p-4 sm:p-6 lg:p-8 min-h-screen rounded-md">
       <div className="text-xl sm:text-2xl md:text-3xl bg-dark-purple text-white font-bold py-2 px-4 rounded mb-4">
-        Hi {Username}
+        <h1>Hi {Username}</h1>
       </div>
       <div className="bg-gray-200 flex flex-col md:flex-row justify-center md:justify-around items-center mb-6 gap-6 p-4 sm:p-6 lg:p-8 rounded-lg">
         <Link to='/main/Trainticket' className="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-6 rounded flex flex-col items-center text-center">
@@ -55,7 +55,7 @@ const Home = () => {
         </Link>
       </div>
       <div className="bg-gray-200 p-4 sm:p-6 lg:p-8 rounded-md mb-6">
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">NEWS</h2>
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">News</h2>
         {loading && <p className="text-center">Loading...</p>}
         {error && <p className="text-red-500 text-center">{error}</p>}
         {!loading && !error && (

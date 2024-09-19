@@ -7,3 +7,36 @@
 .scrollbar-hidden::-webkit-scrollbar {
   display: none; /* For Chrome, Safari, and Opera */
 }
+
+
+@import url('https://fonts.googleapis.com/css2?
+family=Cinzel:wght@400..900&family=Comfortaa:wght
+@300..700&family=Montserrat:ital,wght@0,100..900;
+1,100..900&family=Open+Sans:ital,wght@0,300..800;
+1,300..800&family=Quicksand:wght@300..700&family=
+Roboto+Mono:ital,wght@0,100..700;1,100..700&family
+=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
+h1{
+  font-family: "Cinzel", monospace;
+}
+
+h2{
+ font-family: "Montserrat", sans-serif;
+}
+
+p{
+font-family: "Roboto Mono", monospace;
+}
+
+li{
+ font-family: "Source Code Pro", monospace;
+}
+
+label{
+font-family: "Open Sans", sans-serif;
+}
+
+h3{
+font-family: "Quicksand", sans-serif;
+}
