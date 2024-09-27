@@ -1,19 +1,17 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 import '../App.css';
 
-
-const Busticket = () => {
+function Busticket() {
   const [ticketStatus, setTicketStatus] = useState('');
   const [statusMessage, setStatusMessage] = useState('');
-
   const [bus, setBus] = useState(null);
   const [stations, setStations] = useState([]);
   const [route, setRoute] = useState([]);
 
   const handleCheckStatus = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/auth/check-ticket/${ticketStatus}`);
+      const response = await fetch(`http://localhost:8080/auth/check-bus-ticket/${ticketStatus}`);
       const data = await response.json();
       setStatusMessage(data.isConfirmed ? 'Ticket is confirmed!' : 'Ticket is not confirmed.');
     } catch (error) {
@@ -22,14 +20,16 @@ const Busticket = () => {
     }
   };
 
-  const handleFindBus = () => {
-    fetch('http://localhost:8080/auth/buses')
-      .then(response => response.json())
-      .then(data => {
-        setBus(data.bus);
-        setStations(data.stations);
-        setRoute(data.route);
-      });
+  const handleFindBus = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/auth/buses');
+      const data = await response.json();
+      setBus(data.bus);
+      setStations(data.stations);
+      setRoute(data.route);
+    } catch (error) {
+      console.error('Error finding bus:', error);
+    }
   };
 
   const scrollToSection = (id) => {
@@ -42,121 +42,117 @@ const Busticket = () => {
   return (
     <div className="w-full h-screen p-4 overflow-auto scrollbar-hidden">
       {/* Section 1 */}
-      <div className="bg-gray-200 p-4 rounded-md mx-auto mt-4 w-full max-w-4xl">
-        <h1 className="text-center text-2xl font-bold text-blue-500">Book Bus Ticket</h1>
-        <div className="bg-gray-100 p-4 rounded-md mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="bg-[#E9EAEC] p-4 rounded-md mx-auto mt-4 w-full max-w-4xl">
+        <h1 className="text-center text-2xl font-bold text-[#FAD02C]">Book Bus Ticket</h1>
+        <div className="bg-[#E9EAEC] p-4 rounded-md mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
           <Link
-            to="/main/bus-ticket"
-            className="flex flex-col items-center bg-gray-200 p-4 rounded-md hover:bg-gray-300 transition duration-200"
+            to="/main/BusTicket"
+            className="flex flex-col items-center bg-[#1E3A8A] p-4 rounded-md hover:bg-[#0E2A5A] transition duration-200"
           >
-            <div className="w-24 h-24 bg-blue-400 rounded-md mb-2"></div>
-            <p className="text-gray-700 font-medium">Book Ticket</p>
+            <img src="/images/Screenshot 2024-09-27 013021.png" alt="Book Ticket" className="w-24 h-24 rounded-md mb-2" />
+            <p className="text-[#051D40] font-medium">Book Ticket</p>
           </Link>
           <button
-            className="flex flex-col items-center bg-gray-200 p-4 rounded-md hover:bg-gray-300 transition duration-200"
+            className="flex flex-col items-center bg-[#1E3A8A] p-4 rounded-md hover:bg-[#0E2A5A] transition duration-200"
             onClick={() => scrollToSection('cancel-ticket')}
           >
-            <div className="w-24 h-24 bg-blue-400 rounded-md mb-2"></div>
-            <p className="text-gray-700 font-medium">Cancel Ticket</p>
+            <img src="/images/Screenshot 2024-09-27 013652.png" alt="Cancel Ticket" className="w-24 h-24 rounded-md mb-2" />
+            <p className="text-[#051D40] font-medium">Cancel Ticket</p>
           </button>
           <Link
             to="/bus-ticket"
-            className="flex flex-col items-center bg-gray-200 p-4 rounded-md hover:bg-gray-300 transition duration-200"
+            className="flex flex-col items-center bg-[#1E3A8A] p-4 rounded-md hover:bg-[#0E2A5A] transition duration-200"
           >
-            <div className="w-24 h-24 bg-blue-400 rounded-md mb-2"></div>
-            <p className="text-gray-700 font-medium">Find Bus</p>
+            <img src="/images/Screenshot 2024-09-27 013930.png" alt="Find Bus" className="w-24 h-24 rounded-md mb-2" />
+            <p className="text-[#051D40] font-medium">Find Bus</p>
           </Link>
           <button
-            className="flex flex-col items-center bg-gray-200 p-4 rounded-md hover:bg-gray-300 transition duration-200"
+            className="flex flex-col items-center bg-[#1E3A8A] p-4 rounded-md hover:bg-[#0E2A5A] transition duration-200"
             onClick={() => scrollToSection('check-status')}
           >
-            <div className="w-24 h-24 bg-blue-400 rounded-md mb-2"></div>
-            <p className="text-gray-700 font-medium">Check Ticket Status</p>
+            <img src="/images/Screenshot 2024-09-27 014828.png" alt="Check Ticket Status" className="w-24 h-24 rounded-md mb-2" />
+            <p className="text-[#051D40] font-medium">Check Ticket Status</p>
           </button>
         </div>
       </div>
 
       {/* Section 2 */}
-      <div className="bg-gray-200 p-4 rounded-md mx-auto mt-4 w-full max-w-4xl" id="check-status">
-        <h2 className="text-lg font-bold mb-2">Check Ticket Status</h2>
+      <div className="bg-[#E9EAEC] p-4 rounded-md mx-auto mt-4 w-full max-w-4xl" id="check-status">
+        <h2 className="text-lg font-bold mb-2 text-[#FAD02C]">Check Ticket Status</h2>
         <div className="flex flex-col sm:flex-row justify-between items-center mb-4 space-y-4 sm:space-y-0">
           <input
             type="text"
-            className="w-full sm:w-3/4 rounded-md px-3 py-2 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full sm:w-3/4 rounded-md px-3 py-2 border border-[#7692AB] focus:outline-none focus:ring-2 focus:ring-[#FAD02C]"
             placeholder="Enter ticket ID"
             value={ticketStatus}
             onChange={(e) => setTicketStatus(e.target.value)}
           />
           <button
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md"
+            className="bg-[#FAD02C] hover:bg-[#FAD02C] text-[#051D40] font-bold py-2 px-4 rounded-md"
             onClick={handleCheckStatus}
           >
             Check
           </button>
         </div>
         {statusMessage && (
-          <div className="bg-gray-100 rounded-md p-4">
-            <p className="text-gray-700 font-medium">{statusMessage}</p>
+          <div className="bg-[#E9EAEC] rounded-md p-4">
+            <p className="text-[#051D40] font-medium">{statusMessage}</p>
           </div>
         )}
       </div>
 
       {/* Section 3 */}
-      <div className="bg-gray-200 p-4 rounded-md mx-auto mt-10 w-full max-w-4xl" id="book-ticket">
-        <h1 className="text-3xl font-bold text-center mb-8">Book Ticket</h1>
+      <div className="bg-[#E9EAEC] p-4 rounded-md mx-auto mt-10 w-full max-w-4xl" id="book-ticket">
+        <h1 className="text-3xl font-bold text-center mb-8 text-[#FAD02C]">Book Ticket</h1>
         <Link
-          to="/main/bus-ticket"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          to="/main/BusTicket"
+          className="bg-[#FAD02C] hover:bg-[#FAD02C] text-[#051D40] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         >
           Book Ticket
         </Link>
       </div>
 
       {/* Section 4 */}
-      <div className="bg-gray-100 py-8 px-4 mx-auto mt-10 w-full max-w-4xl">
-        <div className="max-w-md mx-auto bg-white rounded-md shadow-md p-6">
-          <h2 className="text-xl font-semibold mb-4">Find Bus</h2>
+      <div className="bg-[#E9EAEC] p-4 rounded-md mx-auto mt-4 w-full max-w-4xl" id="find-bus">
+        <h2 className="text-lg font-bold mb-2 text-[#FAD02C]">Find Bus</h2>
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-4 space-y-4 sm:space-y-0">
           <input
             type="text"
-            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="w-full sm:w-3/4 rounded-md px-3 py-2 border border-[#7692AB] focus:outline-none focus:ring-2 focus:ring-[#FAD02C]"
             placeholder="Enter bus number or station"
           />
           <button
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-[#FAD02C] hover:bg-[#FAD02C] text-[#051D40] font-bold py-2 px-4 rounded-md"
             onClick={handleFindBus}
           >
             Find Bus
           </button>
         </div>
-
         {bus && (
-          <div className="mt-8">
-            <h2 className="text-xl font-semibold mb-4">Bus Status</h2>
+          <div className="mt-4">
+            <h2 className="text-xl font-semibold mb-2 text-[#051D40]">Bus Status</h2>
             <div className="flex flex-col md:flex-row items-start">
               <div className="relative w-full md:w-1/4 h-40">
                 <div
-                  className="absolute top-0 left-0 w-2 bg-blue-500 rounded-md"
+                  className="absolute top-0 left-0 w-2 bg-[#FAD02C] rounded-md"
                   style={{
-                    height: `${((route.indexOf(bus) + 1) / route.length) * 100}%`,
+                    height: `${((route.indexOf(bus) + 1) / stations.length) * 100}%`,
                   }}
                 />
-                {stations.map((station, index) => (
-                  <div
-                    key={index}
-                    className="absolute bottom-0 left-0 w-2 h-4 bg-red-500 rounded-md"
-                    style={{
-                      bottom: `${(index / stations.length) * 100}%`,
-                    }}
-                  />
-                ))}
+                <div className="bg-[#7692AB] p-2 rounded-md mt-4">
+                  <p className="text-[#051D40]">{bus}</p>
+                </div>
               </div>
-              <div className="ml-4">
-                <p className="text-gray-700 font-semibold">Bus: {bus}</p>
-                {stations.map((station, index) => (
-                  <p key={index} className="text-gray-600">
-                    {station}
-                  </p>
-                ))}
+              <div className="relative w-full md:w-1/4 h-40">
+                <div
+                  className="absolute top-0 left-0 w-2 bg-[#FAD02C] rounded-md"
+                  style={{
+                    height: `${((route.indexOf(bus) + 1) / stations.length) * 100}%`,
+                  }}
+                />
+                <div className="bg-[#7692AB] p-2 rounded-md mt-4">
+                  <p className="text-[#051D40]">{bus}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -166,4 +162,4 @@ const Busticket = () => {
   );
 }
 
-export default Busticket
+export default Busticket;

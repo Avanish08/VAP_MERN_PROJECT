@@ -17,7 +17,12 @@ const BusTicket = () => {
 
   const handleDateChange = (event) => setSelectedDate(event.target.value);
   const handlePassengerChange = (event) => setSelectedPassenger(event.target.value);
-  const handleFromChange = (event) => setFrom(event.target.value);
+  const handleFromChange = (event) => {
+    setFrom(event.target.value);
+    if (event.target.value === to) {
+      setTo(''); // Reset "To" if the same city is selected
+    }
+  };
   const handleToChange = (event) => setTo(event.target.value);
 
   const handleFindBus = async () => {
@@ -71,28 +76,24 @@ const BusTicket = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="bg-gray-200 p-6 rounded-lg shadow-md">
+      <div className="bg-[#E9EAEC] p-6 rounded-lg shadow-md">
         <div className="mb-4">
-          <label htmlFor="date" className="block text-gray-700 text-sm font-bold mb-2">
-            Date
-          </label>
+          <label htmlFor="date" className="block text-[#051D40] text-sm font-bold mb-2">Date</label>
           <input
             type="date"
             id="date"
             value={selectedDate}
             onChange={handleDateChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-[#051D40] leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="from" className="block text-gray-700 text-sm font-bold mb-2">
-            From
-          </label>
+          <label htmlFor="from" className="block text-[#051D40] text-sm font-bold mb-2">From</label>
           <select
             id="from"
             value={from}
             onChange={handleFromChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-[#051D40] leading-tight focus:outline-none focus:shadow-outline"
           >
             <option value="">Select city</option>
             {cities.map((city) => (
@@ -101,14 +102,12 @@ const BusTicket = () => {
           </select>
         </div>
         <div className="mb-4">
-          <label htmlFor="to" className="block text-gray-700 text-sm font-bold mb-2">
-            To
-          </label>
+          <label htmlFor="to" className="block text-[#051D40] text-sm font-bold mb-2">To</label>
           <select
             id="to"
             value={to}
             onChange={handleToChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-[#051D40] leading-tight focus:outline-none focus:shadow-outline"
           >
             <option value="">Select city</option>
             {cities.map((city) => (
@@ -117,28 +116,26 @@ const BusTicket = () => {
           </select>
         </div>
         <div className="mb-4">
-          <label htmlFor="passengerCount" className="block text-gray-700 text-sm font-bold mb-2">
-            No of Passengers
-          </label>
+          <label htmlFor="passengerCount" className="block text-[#051D40] text-sm font-bold mb-2">No of Passengers</label>
           <input
             type="number"
             id="passengerCount"
             value={selectedPassenger}
             onChange={handlePassengerChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-[#051D40] leading-tight focus:outline-none focus:shadow-outline"
             min="1"
           />
         </div>
         <button
           onClick={handleFindBus}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
+          className="bg-[#FAD02C] hover:bg-[#FFE67D] text-[#051D40] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
         >
           Find Bus
         </button>
       </div>
 
       {hasSearched && (
-        <div className="bg-blue-500 p-6 rounded-lg shadow-md mt-6">
+        <div className="bg-[#7692AB] p-6 rounded-lg shadow-md mt-6">
           <h2 className="text-xl font-bold text-white mb-4">Bus Availability</h2>
 
           {busData.length === 0 ? (
@@ -150,21 +147,21 @@ const BusTicket = () => {
                   <h3 className="text-lg font-bold text-white mb-2">{bus.name}</h3>
                   <button
                     onClick={() => handleBusClick(bus)}
-                    className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    className="bg-[#FAD02C] hover:bg-[#FFE67D] text-[#051D40] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   >
                     Show Seat Options
                   </button>
 
                   {selectedBus && selectedBus.name === bus.name && (
                     <div className="mt-6 bg-white p-4 rounded-lg shadow-md">
-                      <h4 className="text-lg font-bold mb-2">Select a Seat Type for {selectedBus.name}</h4>
+                      <h4 className="text-lg font-bold mb-2 text-[#051D40]">Select a Seat Type for {selectedBus.name}</h4>
                       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {Object.keys(selectedBus.price).map((seatType) => (
                           <button
                             key={seatType}
                             onClick={() => handleSeatClick(seatType)}
-                            className={`bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
-                              selectedSeat === seatType ? 'bg-gray-400' : ''
+                            className={`bg-[#FAD02C] hover:bg-[#FFE67D] text-[#051D40] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
+                              selectedSeat === seatType ? 'bg-[#FFE67D]' : ''
                             }`}
                           >
                             {seatType} ({selectedBus.availableSeats[seatType]} seats available)
@@ -174,11 +171,11 @@ const BusTicket = () => {
 
                       {selectedSeat && seatPrice !== null && (
                         <div className="mt-4">
-                          <h5 className="text-md font-semibold">Price for {selectedSeat}:</h5>
-                          <p>₹{seatPrice}</p>
+                          <h5 className="text-md font-semibold text-[#051D40]">Price for {selectedSeat}:</h5>
+                          <p className="text-[#051D40]">₹{seatPrice}</p>
                           <button
                             onClick={handleBookNow}
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                            className="bg-[#FAD02C] hover:bg-[#FFE67D] text-[#051D40] font-bold py-2 px-4 rounded mt-4"
                           >
                             Book Now
                           </button>

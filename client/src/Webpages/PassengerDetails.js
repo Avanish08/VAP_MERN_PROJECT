@@ -33,7 +33,6 @@ const PassengerDetails = () => {
       if (!response.ok) throw new Error('Booking failed');
 
       setPaymentStatus('Booking successful! Proceed to payment.');
-      // You might redirect to a payment page or show a success message
       navigate('/payment');
     } catch (error) {
       console.error('Error completing booking:', error);
@@ -43,29 +42,29 @@ const PassengerDetails = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="bg-gray-200 p-6 rounded-lg shadow-md">
-        <h2 className="text-xl font-bold mb-4">Passenger Details</h2>
+      <div className="bg-[#E9EAEC] p-6 rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold mb-4 text-[#051D40]">Passenger Details</h2>
         <form onSubmit={handleSubmit}>
           {passengers.map((passenger, index) => (
             <div key={index} className="mb-4">
-              <h3 className="text-lg font-bold">Passenger {index + 1}</h3>
-              <label className="block text-gray-700 text-sm font-bold mb-2">
+              <h3 className="text-lg font-bold text-[#051D40]">Passenger {index + 1}</h3>
+              <label className="block text-[#051D40] text-sm font-bold mb-2">
                 Name
                 <input
                   type="text"
                   value={passenger.name}
                   onChange={(e) => handlePassengerChange(index, 'name', e.target.value)}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-[#051D40] leading-tight focus:outline-none focus:border-[#7692AB]"
                   required
                 />
               </label>
-              <label className="block text-gray-700 text-sm font-bold mb-2">
+              <label className="block text-[#051D40] text-sm font-bold mb-2">
                 Age
                 <input
                   type="number"
                   value={passenger.age}
                   onChange={(e) => handlePassengerChange(index, 'age', e.target.value)}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-[#051D40] leading-tight focus:outline-none focus:border-[#7692AB]"
                   required
                 />
               </label>
@@ -73,13 +72,13 @@ const PassengerDetails = () => {
           ))}
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-[#FAD02C] hover:bg-[#FAD02C] text-[#051D40] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             Proceed to Payment
           </button>
         </form>
         {paymentStatus && (
-          <div className={`mt-4 p-4 rounded-lg ${paymentStatus.includes('failed') ? 'bg-red-500' : 'bg-blue-500'} text-white`}>
+          <div className={`mt-4 p-4 rounded-lg ${paymentStatus.includes('failed') ? 'bg-red-500' : 'bg-[#7692AB]'} text-white`}>
             {paymentStatus}
           </div>
         )}

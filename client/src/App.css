@@ -1,3 +1,4 @@
+/* Hide Scrollbars */
 .scrollbar-hidden {
   overflow: -moz-scrollbars-none; /* For Firefox */
   -ms-overflow-style: none; /* For Internet Explorer and Edge */
@@ -8,7 +9,7 @@
   display: none; /* For Chrome, Safari, and Opera */
 }
 
-
+/* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?
 family=Cinzel:wght@400..900&family=Comfortaa:wght
 @300..700&family=Montserrat:ital,wght@0,100..900;
@@ -17,26 +18,47 @@ family=Cinzel:wght@400..900&family=Comfortaa:wght
 Roboto+Mono:ital,wght@0,100..700;1,100..700&family
 =Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
 
-h1{
+/* Color Palette Variables */
+:root {
+  --primary-color: #3498db; /* Blue */
+  --secondary-color: #2ecc71; /* Green */
+  --background-color: #ecf0f1; /* Light Grey */
+  --text-color: #2c3e50; /* Dark Grey */
+}
+
+/* Headings and Text */
+h1 {
   font-family: "Cinzel", monospace;
+  color: var(--primary-color); /* Primary color for h1 */
 }
 
-h2{
- font-family: "Montserrat", sans-serif;
+h2 {
+  font-family: "Montserrat", sans-serif;
+  color: var(--secondary-color); /* Secondary color for h2 */
 }
 
-p{
-font-family: "Roboto Mono", monospace;
+p {
+  font-family: "Roboto Mono", monospace;
+  color: var(--text-color); /* Text color for paragraphs */
 }
 
-li{
- font-family: "Source Code Pro", monospace;
+li {
+  font-family: "Source Code Pro", monospace;
+  color: var(--text-color); /* Text color for list items */
 }
 
-label{
-font-family: "Open Sans", sans-serif;
+label {
+  font-family: "Open Sans", sans-serif;
+  color: var(--primary-color); /* Primary color for labels */
 }
 
-h3{
-font-family: "Quicksand", sans-serif;
+h3 {
+  font-family: "Quicksand", sans-serif;
+  color: var(--secondary-color); /* Use secondary color for h3 */
+}
+
+/* Global Styles */
+body {
+  background-color: var(--background-color); /* Set body background color */
+  color: var(--text-color); /* Set default text color */
 }
