@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const BusTicket = () => {
+const Bus_Ticket = () => {
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedPassenger, setSelectedPassenger] = useState(1);
   const [from, setFrom] = useState('');
@@ -193,4 +193,4 @@ const BusTicket = () => {
   );
 };
 
-export default BusTicket;
+export default Bus_Ticket;

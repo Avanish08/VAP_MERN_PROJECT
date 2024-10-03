@@ -8,7 +8,7 @@ import BookTrainTicketSystem from './BookTrainTicketSystem';
 import Busticket from './Busticket';
 import TrainTicket from './TrainTicket';
 import PassengerDetails from './PassengerDetails';
-import BusTicket from './Bus-Ticket';
+import Bus_Ticket from './Bus_Ticket';
 
 const Maincontent = () => {
   const location = useLocation();
@@ -24,7 +24,7 @@ const Maincontent = () => {
         {location.pathname === '/main/Busticket' && <Busticket/>}
         {location.pathname === '/main/TrainTicket' && <TrainTicket/>}
         {location.pathname === '/main/Passengerdetail' && <PassengerDetails/>}
-        {location.pathname === '/main/bus-ticket' && <BusTicket/>}
+        {location.pathname === '/main/bus-ticket' && <Bus_Ticket/>}
       </div>
     </>
   );

@@ -46,7 +46,7 @@ function Busticket() {
         <h1 className="text-center text-2xl font-bold text-[#FAD02C]">Book Bus Ticket</h1>
         <div className="bg-[#E9EAEC] p-4 rounded-md mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
           <Link
-            to="/main/BusTicket"
+            to="/main/bus-ticket"
             className="flex flex-col items-center bg-[#1E3A8A] p-4 rounded-md hover:bg-[#0E2A5A] transition duration-200"
           >
             <img src="/images/Screenshot 2024-09-27 013021.png" alt="Book Ticket" className="w-24 h-24 rounded-md mb-2" />
