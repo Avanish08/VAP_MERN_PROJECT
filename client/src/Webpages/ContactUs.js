@@ -25,7 +25,7 @@ const ContactUs = () => {
             className="w-full p-2 mt-1 text-sm text-gray-700 border border-gray-300 rounded-md" 
           />
         </label>
-        <button className="bg-[#FAD02C] hover:bg-[#E9EAEC] text-[#051D40] font-bold py-2 px-4 rounded">
+        <button className="bg-zinc-300 hover:bg-[#E9EAEC] text-[#051D40] font-bold py-2 px-4 rounded">
           Send Message
         </button>
       </form>

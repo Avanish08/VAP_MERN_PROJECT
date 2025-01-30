@@ -9,7 +9,7 @@ const trainScheduleRoutes = require('./Routers/TrainRoutes');
 const busScheduleRoutes = require('./Routers/BusRoutes');
 const ticketRoutes = require('./Routers/TicketRoutes');
 
-require('./Models/mongodb')
+require('./mongodb')
 require('dotenv').config();
 const PORT=process.env.PORT;
 

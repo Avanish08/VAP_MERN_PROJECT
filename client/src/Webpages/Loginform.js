@@ -86,13 +86,13 @@ const Loginform = () => {
             <div className="flex items-center justify-between">
               <button
                 type="submit"
-                className="bg-[#FAD02C] hover:bg-[#7692AB] text-[#051D40] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-zinc-300 hover:bg-[#7692AB] text-[#051D40] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 Login
               </button>
             </div>
             <p className="mt-4 text-center text-[#051D40] text-sm">
-              Don't have an account? <Link to="/" className="text-[#7692AB] text-base py-2 px-4 rounded hover:underline">
+              Don't have an account? <Link to="/" className="text-[#051D40] text-base py-2 px-4 rounded hover:underline">
                 Signup
               </Link>
             </p>

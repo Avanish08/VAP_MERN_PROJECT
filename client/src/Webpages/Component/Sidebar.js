@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
   return (
-    <div className="bg-[#051D40] p-4 min-h-screen rounded-md mb-4 md:mb-0 w-full md:w-48.5% xl:w-48.5% lg:w-48.5% sm:w-full">
+    <div className="bg-[#051D40] p-4 min-h-screen mb-4 md:mb-0 w-full md:w-48.5% xl:w-48.5% lg:w-48.5% sm:w-full">
       <div className="logo-container mb-10 flex justify-center">
         <img src={logo} alt="logo" className="w-1/2 h-auto md:w-3/4 xl:w-1/2 lg:w-3/4 sm:w-1/2" />
       </div>

@@ -27,10 +27,7 @@ async function init() {
         required: true,
         unique: true
       },
-      MobileNumber: {
-        type: String,
-        required: true
-      }
+    
     });
 
     OtherDatabase = otherDb.model('otherdatabase', otherDatabaseSchema);

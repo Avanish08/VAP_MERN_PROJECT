@@ -43,17 +43,17 @@ function BookTrainTicketSystem() {
     <div className="w-full h-screen p-4 overflow-auto scrollbar-hidden">
       {/* Section 1 */}
       <div className="bg-[#E9EAEC] p-4 rounded-md mx-auto mt-4 w-full max-w-4xl">
-        <h1 className="text-center text-2xl font-bold text-[#FAD02C]">Book Train Ticket</h1>
+        <h1 className="text-center text-2xl font-bold text-[#051D40]">Book Train Ticket</h1>
         <div className="bg-[#E9EAEC] p-4 rounded-md mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
           <Link
             to="/main/TrainTicket"
-            className="flex flex-col items-center bg-[#1E3A8A] p-4 rounded-md hover:bg-[#0E2A5A] transition duration-200"
+            className="flex flex-col items-center bg-[white] p-4 rounded-md "
           >
             <img src="/images/Screenshot 2024-09-27 004754.png" alt="Book Ticket" className="w-24 h-24 rounded-md mb-2" />
             <p className="text-[#051D40] font-medium">Book Ticket</p>
           </Link>
           <button
-            className="flex flex-col items-center bg-[#1E3A8A] p-4 rounded-md hover:bg-[#0E2A5A] transition duration-200"
+            className="flex flex-col items-center bg-[white] p-4 rounded-md "
             onClick={() => scrollToSection('cancel-ticket')}
           >
             <img src="/images/Screenshot 2024-09-27 004935.png" alt="Cancel Ticket" className="w-24 h-24 rounded-md mb-2" />
@@ -61,13 +61,13 @@ function BookTrainTicketSystem() {
           </button>
           <Link
             to="/train-ticket"
-            className="flex flex-col items-center bg-[#1E3A8A] p-4 rounded-md hover:bg-[#0E2A5A] transition duration-200"
+            className="flex flex-col items-center bg-[white] p-4 rounded-md "
           >
             <img src="/images/Screenshot 2024-09-27 005040.png" alt="Find Train" className="w-24 h-24 rounded-md mb-2" />
             <p className="text-[#051D40] font-medium">Find Train</p>
           </Link>
           <button
-            className="flex flex-col items-center bg-[#1E3A8A] p-4 rounded-md hover:bg-[#0E2A5A] transition duration-200"
+            className="flex flex-col items-center bg-[white] p-4 rounded-md hover:bg-[none] transition duration-200"
             onClick={() => scrollToSection('check-status')}
           >
             <img src="/images/Screenshot 2024-09-27 011906.png" alt="Check Ticket Status" className="w-24 h-24 rounded-md mb-2" />
@@ -78,7 +78,7 @@ function BookTrainTicketSystem() {
 
       {/* Section 2 */}
       <div className="bg-[#E9EAEC] p-4 rounded-md mx-auto mt-4 w-full max-w-4xl" id="check-status">
-        <h2 className="text-lg font-bold mb-2 text-[#FAD02C]">Check Ticket Status</h2>
+        <h2 className="text-lg font-bold mb-2 text-[#051D40]">Check Ticket Status</h2>
         <div className="flex flex-col sm:flex-row justify-between items-center mb-4 space-y-4 sm:space-y-0">
           <input
             type="text"
@@ -88,7 +88,7 @@ function BookTrainTicketSystem() {
             onChange={(e) => setTicketStatus(e.target.value)}
           />
           <button
-            className="bg-[#FAD02C] hover:bg-[#FAD02C] text-[#051D40] font-bold py-2 px-4 rounded-md"
+            className="bg-[white] hover:bg-[#FAD02C] text-[#051D40] font-bold py-2 px-4 rounded-md"
             onClick={handleCheckStatus}
           >
             Check
@@ -103,10 +103,10 @@ function BookTrainTicketSystem() {
 
       {/* Section 3 */}
       <div className="bg-[#E9EAEC] p-4 rounded-md mx-auto mt-10 w-full max-w-4xl" id="book-ticket">
-        <h1 className="text-3xl font-bold text-center mb-8 text-[#FAD02C]">Book Ticket</h1>
+        <h1 className="text-3xl font-bold text-center mb-8 text-[#051D40]">Book Ticket</h1>
         <Link
           to="/main/TrainTicket"
-          className="bg-[#FAD02C] hover:bg-[#FAD02C] text-[#051D40] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="bg-[white] hover:bg-[#FAD02C] text-[#051D40] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         >
           Book Ticket
         </Link>
@@ -114,7 +114,7 @@ function BookTrainTicketSystem() {
 
       {/* Section 4 */}
       <div className="bg-[#E9EAEC] p-4 rounded-md mx-auto mt-4 w-full max-w-4xl" id="find-train">
-        <h2 className="text-lg font-bold mb-2 text-[#FAD02C]">Find Train</h2>
+        <h2 className="text-lg font-bold mb-2 text-[#051D40]">Find Train</h2>
         <div className="flex flex-col sm:flex-row justify-between items-center mb-4 space-y-4 sm:space-y-0">
           <input
             type="text"
@@ -122,7 +122,7 @@ function BookTrainTicketSystem() {
             placeholder="Enter train number or station"
           />
           <button
-            className="bg-[#FAD02C] hover:bg-[#FAD02C] text-[#051D40] font-bold py-2 px-4 rounded-md"
+            className="bg-[white] hover:bg-[#FAD02C] text-[#051D40] font-bold py-2 px-4 rounded-md"
             onClick={handleFindTrain}
           >
             Find Train

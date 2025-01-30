@@ -41,21 +41,21 @@ const Home = () => {
 
   return (
     <div className="w-full bg-[#E9EAEC] p-4 sm:p-6 lg:p-8 min-h-screen rounded-md">
-      <div className="text-xl sm:text-2xl md:text-3xl bg-[#051D40] text-[#FAD02C] font-bold py-2 px-4 rounded mb-4">
+      <div className="text-xl sm:text-2xl md:text-3xl bg-[white] text-[#051D40] font-bold py-2 px-4 rounded mb-4">
         <h1>Hi {Username}</h1>
       </div>
-      <div className="bg-[#7692AB] flex flex-col md:flex-row justify-center md:justify-around items-center mb-6 gap-6 p-4 sm:p-6 lg:p-8 rounded-lg">
-        <Link to='/main/Trainticket' className="bg-[#FAD02C] hover:bg-[#FFE680] text-[#051D40] font-bold py-4 px-6 rounded flex flex-col items-center text-center">
+      <div className="bg-[white] flex flex-col md:flex-row justify-center md:justify-around items-center mb-6 gap-6 p-4 sm:p-6 lg:p-8 rounded-lg">
+        <Link to='/main/Trainticket' className="bg-zinc-300 text-[#051D40] font-bold py-4 px-6 rounded flex flex-col items-center text-center">
           <img src={train} alt="Train" className="w-16 h-16 mb-2" />
           <p className="text-lg sm:text-xl md:text-2xl">TRAIN TICKET</p>
         </Link>
-        <Link to='/main/Busticket' className="bg-[#FAD02C] hover:bg-[#FFE680] text-[#051D40] font-bold py-4 px-6 rounded flex flex-col items-center text-center">
+        <Link to='/main/Busticket' className="bg-zinc-300 text-[#051D40] font-bold py-4 px-6 rounded flex flex-col items-center text-center">
           <img src={bus} alt="Bus" className="w-16 h-16 mb-2" />
           <p className="text-lg sm:text-xl md:text-2xl">BUS TICKET</p>
         </Link>
       </div>
       <div className="bg-[#E9EAEC] p-4 sm:p-6 lg:p-8 rounded-md mb-6">
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#FAD02C] mb-4">News</h2>
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[black] mb-4">News</h2>
         {loading && <p className="text-center text-[#051D40]">Loading...</p>}
         {error && <p className="text-red-500 text-center">{error}</p>}
         {!loading && !error && (
@@ -74,7 +74,7 @@ const Home = () => {
         )}
       </div>
       <div className="bg-[#E9EAEC] p-4 sm:p-6 lg:p-8 rounded-md mb-6">
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#FAD02C] mb-4">Train Schedule</h2>
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#051D40] mb-4">Train Schedule</h2>
         {!loading && !error && (
           <div className="max-h-80 sm:max-h-96 lg:max-h-screen overflow-y-auto">
             {trainSchedule.length > 0 ? (
@@ -92,7 +92,7 @@ const Home = () => {
         )}
       </div>
       <div className="bg-[#E9EAEC] p-4 sm:p-6 lg:p-8 rounded-md mb-6">
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#FAD02C] mb-4">Bus Schedule</h2>
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#051D40] mb-4">Bus Schedule</h2>
         {!loading && !error && (
           <div className="max-h-80 sm:max-h-96 lg:max-h-screen overflow-y-auto">
             {busSchedule.length > 0 ? (

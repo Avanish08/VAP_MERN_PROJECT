@@ -4,26 +4,27 @@ const UserModel = require("../Models/User");
 let OtherDatabase;
 
 async function init() {
-  const data = await require('../Models/mongodb');
+  const data = await require('../mongodb');
   OtherDatabase = data.OtherDatabase;
 }
 
 async function Regis(req, res) {
   try {
     await init(); // Wait for init to complete
-    const { Username, AddharCard,Email, Password, ConfirmPassword} = req.body;
+    const { Username, AadharCard,Email, Password, ConfirmPassword} = req.body;
       
-    const addharData = await OtherDatabase.findOne({ AddharCard });
-    if (!addharData) {
+    const aadharData = await OtherDatabase.findOne({ AadharCard });
+    if (!aadharData) {
+      console.log('Aadhar data not found for : ', AadharCard)
       return res.status(400)
         .json({
-          message: 'Addhar data not found in other database',
+          message: 'Aadhar data not found in other database',
           success: false
         });
     }
 
     // Create new user
-    const userModel = new UserModel({ Username, AddharCard,Email, Password, ConfirmPassword });
+    const userModel = new UserModel({ Username, AadharCard,Email, Password, ConfirmPassword });
     await userModel.save();
     res.status(201)
       .json({

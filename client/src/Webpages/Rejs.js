@@ -6,7 +6,7 @@ import { handleError, handleSuccess } from './utils';
 const Rejs = () => {
   const [regiInfo, setRegiInfo] = useState({
     Username: '',
-    AddharCard: '',
+    AadharCard: '',
     Email: '',
     Password: '',
     ConfirmPassword: ''
@@ -20,10 +20,11 @@ const Rejs = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    const { Username, AddharCard, Email, Password, ConfirmPassword } = regiInfo;
-    if (!Username || !Email || !AddharCard || !Password || !ConfirmPassword) {
+    const { Username, AadharCard, Email, Password, ConfirmPassword } = regiInfo;
+    if (!Username || !Email || !AadharCard || !Password || !ConfirmPassword) {
       return handleError('There some Mismatched');
     }
+    console.log('regiinfo: ', regiInfo)
     try {
       const response = await fetch('http://localhost:8080/auth/Regis', {
         method: 'POST',
@@ -33,6 +34,7 @@ const Rejs = () => {
       const result = await response.json();
       if (response.status === 400) {
         handleError(result.message);
+        console.log(result.message)
       } else if (response.status === 201) {
         handleSuccess('User Created Successful');
         setTimeout(() => {
@@ -52,7 +54,7 @@ const Rejs = () => {
         <div className="max-w-md lg:w-4/5 xl:w-4/5 2xl:w-4/5 mx-auto flex flex-col">
           <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSignup}>
             {/* Heading Color */}
-            <h2 className="text-2xl font-bold mb-6 text-center" style={{ color: '#FAD02C' }}>
+            <h2 className="text-2xl font-bold mb-6 text-center" style={{ color: '#051D40' }}>
               Register
             </h2>
             {/* Username Input */}
@@ -71,17 +73,17 @@ const Rejs = () => {
                 style={{ borderColor: '#E9EAEC', focus: { borderColor: '#7692AB' } }}
               />
             </div>
-            {/* AddharCard Input */}
+            {/* AadharCard Input */}
             <div className="mb-4">
-              <label className="block" style={{ color: '#051D40' }} htmlFor="addhaar-card">
-                AddharCard
+              <label className="block" style={{ color: '#051D40' }} htmlFor="aadhaar-card">
+                AadharCard
               </label>
               <input
                 id="addhaar-card"
                 type="text"
-                name="AddharCard"
+                name="AadharCard"
                 onChange={handleChange}
-                value={regiInfo.AddharCard}
+                value={regiInfo.AadharCard}
                 placeholder="Enter your VID"
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
                 style={{ borderColor: '#E9EAEC', focus: { borderColor: '#7692AB' } }}
@@ -147,7 +149,7 @@ const Rejs = () => {
             {/* Link to Login */}
             <p className="mt-4 text-center" style={{ color: '#051D40' }}>
               Already have an account? 
-              <Link to="/login" className="text-[#FAD02C] text-base py-2 px-4 rounded hover:underline h-12">
+              <Link to="/login" className="text-[#051D40] text-base py-2 px-4 rounded hover:underline h-12">
                 Login
               </Link>
             </p>
