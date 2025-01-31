@@ -13,76 +13,59 @@ const PassengerDetails = () => {
     setPassengers(updatedPassengers);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     
     const bookingData = {
       ...state,
       passengers,
+      amount: state.totalPrice, // Use the total price from the state
     };
 
-    try {
-      const response = await fetch('http://localhost:8080/auth/complete-booking', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(bookingData),
-      });
+    console.log('Booking Data:', bookingData); // Log bookingData to inspect its structure
 
-      if (!response.ok) throw new Error('Booking failed');
+    setPaymentStatus('Booking successful! Proceed to payment.');
 
-      setPaymentStatus('Booking successful! Proceed to payment.');
-      navigate('/payment');
-    } catch (error) {
-      console.error('Error completing booking:', error);
-      setPaymentStatus('Booking failed. Please try again.');
-    }
+    // Redirect to payment page with booking details in state
+    navigate('/main/Paymentinterface', { state: { bookingData } });
   };
 
   return (
     <div className="container mx-auto p-4">
-      <div className="bg-[#E9EAEC] p-6 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold mb-4 text-[#051D40]">Passenger Details</h2>
-        <form onSubmit={handleSubmit}>
-          {passengers.map((passenger, index) => (
-            <div key={index} className="mb-4">
-              <h3 className="text-lg font-bold text-[#051D40]">Passenger {index + 1}</h3>
-              <label className="block text-[#051D40] text-sm font-bold mb-2">
-                Name
-                <input
-                  type="text"
-                  value={passenger.name}
-                  onChange={(e) => handlePassengerChange(index, 'name', e.target.value)}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-[#051D40] leading-tight focus:outline-none focus:border-[#7692AB]"
-                  required
-                />
-              </label>
-              <label className="block text-[#051D40] text-sm font-bold mb-2">
-                Age
-                <input
-                  type="number"
-                  value={passenger.age}
-                  onChange={(e) => handlePassengerChange(index, 'age', e.target.value)}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-[#051D40] leading-tight focus:outline-none focus:border-[#7692AB]"
-                  required
-                />
-              </label>
-            </div>
-          ))}
-          <button
-            type="submit"
-            className="bg-[#FAD02C] hover:bg-[#FAD02C] text-[#051D40] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Proceed to Payment
-          </button>
-        </form>
-        {paymentStatus && (
-          <div className={`mt-4 p-4 rounded-lg ${paymentStatus.includes('failed') ? 'bg-red-500' : 'bg-[#7692AB]'} text-white`}>
-            {paymentStatus}
+      <form onSubmit={handleSubmit}>
+        {passengers.map((passenger, index) => (
+          <div key={index} className="mb-4">
+            <label className="block text-[#051D40] text-sm font-bold mb-2">
+              Passenger {index + 1} Name
+              <input
+                type="text"
+                value={passenger.name}
+                onChange={(e) => handlePassengerChange(index, 'name', e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-[#051D40] leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="Name"
+              />
+            </label>
+            <label className="block text-[#051D40] text-sm font-bold mb-2">
+              Passenger {index + 1} Age
+              <input
+                type="number"
+                value={passenger.age}
+                onChange={(e) => handlePassengerChange(index, 'age', e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-[#051D40] leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="Age"
+              />
+            </label>
           </div>
-        )}
-      </div>
+        ))}
+        <div className="mt-2">
+          <h5 className="text-md font-semibold text-[#051D40]">Total Price:</h5>
+          <p className="text-[#051D40]">₹{state.totalPrice}</p>
+        </div>
+        <button type="submit" className="bg-[#FAD02C] hover:bg-[#FFE67D] text-[#051D40] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          Proceed to payment
+        </button>
+      </form>
+      <p>{paymentStatus}</p>
     </div>
   );
 };

@@ -3,20 +3,27 @@ import { useNavigate } from 'react-router-dom';
 
 const TrainTicket = () => {
   const [selectedDate, setSelectedDate] = useState('');
-  const [selectedPassenger, setSelectedPassenger] = useState(1);
+  const [selectedPassenger, setSelectedPassenger] = useState(1); // Default to 1 passenger
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
   const [trainData, setTrainData] = useState([]);
-  const [hasSearched, setHasSearched] = useState(false);
   const [selectedTrain, setSelectedTrain] = useState(null);
   const [selectedSeat, setSelectedSeat] = useState(null);
   const [seatPrice, setSeatPrice] = useState(null);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [hasSearched, setHasSearched] = useState(false);
   const navigate = useNavigate();
 
   const cities = ['New Delhi', 'Mumbai', 'Kolkata', 'Chennai', 'Bengaluru'];
 
   const handleDateChange = (event) => setSelectedDate(event.target.value);
-  const handlePassengerChange = (event) => setSelectedPassenger(event.target.value);
+  const handlePassengerChange = (event) => {
+    const count = parseInt(event.target.value, 10);
+    setSelectedPassenger(count);
+    if (seatPrice !== null) {
+      setTotalPrice(seatPrice * count); // Update total price based on new passenger count
+    }
+  };
   const handleFromChange = (event) => setFrom(event.target.value);
   const handleToChange = (event) => setTo(event.target.value);
 
@@ -41,30 +48,23 @@ const TrainTicket = () => {
 
   const handleTrainClick = (train) => {
     setSelectedTrain(train);
-    setSelectedSeat(null);
-    setSeatPrice(null);
   };
 
   const handleSeatClick = (seatType) => {
     setSelectedSeat(seatType);
-    setSeatPrice(selectedTrain.price[seatType]);
+    const price = selectedTrain.price[seatType];
+    setSeatPrice(price);
+    setTotalPrice(price * selectedPassenger); // Update total price based on passenger count
   };
 
   const handleBookNow = () => {
-    if (!selectedTrain || !selectedSeat) {
-      alert('Please select a seat before booking');
-      return;
-    }
-
+    // Navigate to PassengerDetails with the booking data
     navigate('/main/Passengerdetail', {
       state: {
-        date: selectedDate,
-        from,
-        to,
-        trainName: selectedTrain.name,
-        seatType: selectedSeat,
-        price: seatPrice,
+        selectedTrain,
+        selectedSeat,
         passengerCount: selectedPassenger,
+        totalPrice,
       },
     });
   };
@@ -72,75 +72,42 @@ const TrainTicket = () => {
   return (
     <div className="container mx-auto p-4">
       <div className="bg-[#E9EAEC] p-6 rounded-lg shadow-md">
-        <div className="mb-4">
-          <label htmlFor="date" className="block text-[#051D40] text-sm font-bold mb-2">
-            Date
-          </label>
-          <input
-            type="date"
-            id="date"
-            value={selectedDate}
-            onChange={handleDateChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-[#051D40] leading-tight focus:outline-none focus:shadow-outline"
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="from" className="block text-[#051D40] text-sm font-bold mb-2">
-            From
-          </label>
-          <select
-            id="from"
-            value={from}
-            onChange={handleFromChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-[#051D40] leading-tight focus:outline-none focus:shadow-outline"
-          >
-            <option value="">Select city</option>
+        <label htmlFor="from" className="block text-[#051D40] text-sm font-bold mb-2">
+          From:
+          <select value={from} onChange={handleFromChange} className="shadow appearance-none border rounded w-full py-2 px-3 text-[#051D40] leading-tight focus:outline-none focus:shadow-outline">
+            <option value="">Select City</option>
             {cities.map((city) => (
-              <option key={city} value={city}>{city}</option>
+              <option key={city} value={city}>
+                {city}
+              </option>
             ))}
           </select>
-        </div>
-        <div className="mb-4">
-          <label htmlFor="to" className="block text-[#051D40] text-sm font-bold mb-2">
-            To
-          </label>
-          <select
-            id="to"
-            value={to}
-            onChange={handleToChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-[#051D40] leading-tight focus:outline-none focus:shadow-outline"
-          >
-            <option value="">Select city</option>
+        </label>
+        <label htmlFor="to" className="block text-[#051D40] text-sm font-bold mb-2">
+          To:
+          <select value={to} onChange={handleToChange} className="shadow appearance-none border rounded w-full py-2 px-3 text-[#051D40] leading-tight focus:outline-none focus:shadow-outline">
+            <option value="">Select City</option>
             {cities.map((city) => (
-              <option key={city} value={city}>{city}</option>
+              <option key={city} value={city}>
+                {city}
+              </option>
             ))}
           </select>
-        </div>
-        <div className="mb-4">
-          <label htmlFor="passengerCount" className="block text-[#051D40] text-sm font-bold mb-2">
-            No of Passengers
-          </label>
-          <input
-            type="number"
-            id="passengerCount"
-            value={selectedPassenger}
-            onChange={handlePassengerChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-[#051D40] leading-tight focus:outline-none focus:shadow-outline"
-            min="1"
-          />
-        </div>
-        <button
-          onClick={handleFindTrain}
-          className="bg-[white] hover:bg-[#FFE67D] text-[#051D40] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
-        >
-          Find Train
-        </button>
+        </label>
+        <label htmlFor="date" className="block text-[#051D40] text-sm font-bold mb-2">
+          Date:
+          <input type="date" value={selectedDate} onChange={handleDateChange} className="shadow appearance-none border rounded w-full py-2 px-3 text-[#051D40] leading-tight focus:outline-none focus:shadow-outline"/>
+        </label>
+        <label htmlFor="passengerCount" className="block text-[#051D40] text-sm font-bold mb-2">
+          Number of Passengers:
+          <input type="number" value={selectedPassenger} onChange={handlePassengerChange} min="1" className="shadow appearance-none border rounded w-full py-2 px-3 text-[#051D40] leading-tight focus:outline-none focus:shadow-outline"/>
+        </label>
+        <button onClick={handleFindTrain} className="bg-[white] hover:bg-[#FFE67D] text-[#051D40] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4">Find Train</button>
       </div>
 
       {hasSearched && (
         <div className="bg-[#7692AB] p-6 rounded-lg shadow-md mt-6">
           <h2 className="text-xl font-bold text-white mb-4">Train Availability</h2>
-
           {trainData.length === 0 ? (
             <p className="text-white">No trains found. Please refine your search criteria.</p>
           ) : (
@@ -176,9 +143,13 @@ const TrainTicket = () => {
                         <div className="mt-4">
                           <h5 className="text-md font-semibold text-[#051D40]">Price for {selectedSeat}:</h5>
                           <p className="text-[#051D40]">₹{seatPrice}</p>
+                          <div className="mt-2">
+                            <h5 className="text-md font-semibold text-[#051D40]">Total Price:</h5>
+                            <p className="text-[#051D40]">₹{totalPrice}</p>
+                          </div>
                           <button
                             onClick={handleBookNow}
-                            className="bg-[#FAD02C] hover:bg-[#FFE67D] text-[#051D40] font-bold py-2 px-4 rounded mt-4"
+                            className="bg-[#FAD02C] hover:bg-[#FFE67D] text-[#051D40] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                           >
                             Book Now
                           </button>

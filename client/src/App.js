@@ -6,6 +6,8 @@ import Mainpage from './Webpages/Mainpage';
 import Maincontent from './Webpages/Maincontent';
 import Navbar from './Webpages/Component/Navbar';
 import Rejs from './Webpages/Rejs';
+import TicketSuccess from './Webpages/TIcketSuccess';
+import TicketFailed from './Webpages/TicketFailed';
 
 
 function App() {
@@ -26,7 +28,10 @@ function App() {
           <Route path="Busticket" element={<Maincontent />} />
           <Route path="TrainTicket" element={<Maincontent />} />
           <Route path="Passengerdetail" element={<Maincontent />} />
+          <Route path="Paymentinterface" element={<Maincontent/>}/>
           <Route path="bus-ticket" element={<Maincontent />} />
+          <Route path="ticket-success" element={<TicketSuccess />} />
+          <Route path="ticket-failed" element={<TicketFailed />} />
         </Route>
       </Routes>
       

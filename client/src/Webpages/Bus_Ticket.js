@@ -143,7 +143,7 @@ const Bus_Ticket = () => {
           ) : (
             <div>
               {busData.map((bus) => (
-                <div key={bus.name} className="mb-6">
+                <div key={bus._id} className="mb-6">
                   <h3 className="text-lg font-bold text-white mb-2">{bus.name}</h3>
                   <button
                     onClick={() => handleBusClick(bus)}

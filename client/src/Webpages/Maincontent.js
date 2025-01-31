@@ -9,6 +9,9 @@ import Busticket from './Busticket';
 import TrainTicket from './TrainTicket';
 import PassengerDetails from './PassengerDetails';
 import Bus_Ticket from './Bus_Ticket';
+import PaymentInterface from './PaymentInterface';
+import TicketSuccess from './TIcketSuccess';
+import TicketFailed from './TicketFailed';
 
 const Maincontent = () => {
   const location = useLocation();
@@ -25,6 +28,10 @@ const Maincontent = () => {
         {location.pathname === '/main/TrainTicket' && <TrainTicket/>}
         {location.pathname === '/main/Passengerdetail' && <PassengerDetails/>}
         {location.pathname === '/main/bus-ticket' && <Bus_Ticket/>}
+        {location.pathname === '/main/Paymentinterface' && <PaymentInterface/>}
+        {location.pathname === '/main/ticket-success' && <TicketSuccess/>}
+        {location.pathname === '/main/ticket-failed' && <TicketFailed/>}
+
       </div>
     </>
   );
