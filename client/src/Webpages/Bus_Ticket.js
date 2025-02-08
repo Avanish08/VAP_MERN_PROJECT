@@ -11,12 +11,20 @@ const Bus_Ticket = () => {
   const [selectedBus, setSelectedBus] = useState(null);
   const [selectedSeat, setSelectedSeat] = useState(null);
   const [seatPrice, setSeatPrice] = useState(null);
+  const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
 
   const cities = ['New Delhi', 'Mumbai', 'Kolkata', 'Chennai', 'Bengaluru'];
 
   const handleDateChange = (event) => setSelectedDate(event.target.value);
-  const handlePassengerChange = (event) => setSelectedPassenger(event.target.value);
+  const handlePassengerChange = (event) =>{ 
+    const count = parseInt(event.target.value,10);
+    setSelectedPassenger(count)
+    if (seatPrice !== null) {
+      setTotalPrice(seatPrice * count); // Update total price based on new passenger count
+    }
+  
+  };
   const handleFromChange = (event) => {
     setFrom(event.target.value);
     if (event.target.value === to) {
@@ -52,14 +60,12 @@ const Bus_Ticket = () => {
 
   const handleSeatClick = (seatType) => {
     setSelectedSeat(seatType);
-    setSeatPrice(selectedBus.price[seatType]);
+    const price = selectedBus.price[seatType];
+    setSeatPrice(price);
+    setTotalPrice(price * selectedPassenger);
   };
 
   const handleBookNow = () => {
-    if (!selectedBus || !selectedSeat) {
-      alert('Please select a seat before booking');
-      return;
-    }
 
     navigate('/main/Passengerdetail', {
       state: {
@@ -68,7 +74,7 @@ const Bus_Ticket = () => {
         to,
         busName: selectedBus.name,
         seatType: selectedSeat,
-        price: seatPrice,
+        totalPrice,
         passengerCount: selectedPassenger,
       },
     });
@@ -173,6 +179,10 @@ const Bus_Ticket = () => {
                         <div className="mt-4">
                           <h5 className="text-md font-semibold text-[#051D40]">Price for {selectedSeat}:</h5>
                           <p className="text-[#051D40]">₹{seatPrice}</p>
+                          <div className="mt-2">
+                            <h5 className="text-md font-semibold text-[#051D40]">Total Price:</h5>
+                            <p className="text-[#051D40]">₹{totalPrice}</p>
+                            </div>
                           <button
                             onClick={handleBookNow}
                             className="bg-[#FAD02C] hover:bg-[#FFE67D] text-[#051D40] font-bold py-2 px-4 rounded mt-4"
