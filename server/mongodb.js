@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 let otherDb;
 let OtherDatabase;
 
-mongoose.connect('mongodb+srv://akdis0302:Qwerty65%40123@cluster0.ulnnq.mongodb.net/register&login')
+mongoose.connect('')
   .then(() => {
     console.log('Mongodb connected to register');
   })
@@ -13,7 +13,7 @@ mongoose.connect('mongodb+srv://akdis0302:Qwerty65%40123@cluster0.ulnnq.mongodb.
 
 async function init() {
   try {
-    const db = await mongoose.createConnection('mongodb+srv://akdis0302:Qwerty65%40123@cluster0.ulnnq.mongodb.net/VID');
+    const db = await mongoose.createConnection('');
     console.log('Mongodb connected to Vid');
     otherDb = db;
 
